@@ -1,13 +1,13 @@
 class_name BitMask64Grid
 
-var bit: int
 var grid := PackedInt64Array([0])
 var grid_size := Vector3i.ONE * 4
 
 
 #region Static
-static func from_mask(mask: Array[Vector3i]) -> BitMask64Grid:
+static func from_mask(mask: Array[Vector3i], _size: Vector3i) -> BitMask64Grid:
 	var bitmask := BitMask64Grid.new()
+	bitmask.resize(_size)
 	bitmask.append_array(mask)
 	return bitmask
 
