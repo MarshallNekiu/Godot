@@ -93,6 +93,14 @@ func has_array(mask: PackedInt64Array) -> Array[bool]:
 	return res
 
 
+func set_flag(idx: int, flag := true) -> void:
+	if flag:
+		if not has(idx):
+			bit += 1 << idx
+	elif has(idx):
+		bit -= 1 << idx
+
+
 func append(mask: int) -> void:
 	if not has(mask):
 		bit += (1 << (mask % 64)) 

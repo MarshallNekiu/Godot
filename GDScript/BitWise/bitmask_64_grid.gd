@@ -89,7 +89,7 @@ static func _get_mask(_grid: PackedInt64Array, _grid_size: Vector3i, sort := tru
 		for j in 64:
 			if (_grid[i] & (1 << j)) - 1 >= 0:
 				var x := (i * 4 + (j % 4))
-				var y := ((x / _grid_size.x) * 4 + ((i % 16) / 4) + ((j % 16) / 4))
+				var y := ((i % ((_grid_size.x / 4) * (_grid_size.y / 4))) / (_grid_size.x / 4)) * 4 + (j % 16) / 4
 				mask.append(Vector3i(
 					x % _grid_size.x,
 					y % _grid_size.y,
@@ -135,7 +135,7 @@ func has(mask: int) -> bool:
 
 func has_v(mask: Vector3i) -> bool:
 	var block := (mask.x / 4 + (mask.y / 4) * (grid_size.x / 4) + (mask.z / 4) * (grid_size.x / 4) * (grid_size.y / 4))
-	return mask.x < grid_size.x and mask.y < grid_size.y and mask.z < grid_size.z and (grid[block] & (1 << (((mask.x % 4) + (mask.y % 4) * 4 + (mask.z % 4) * 4 * 4) % 64))) - 1 >= 0
+	return block < grid.size() and mask.x < grid_size.x and mask.y < grid_size.y and mask.z < grid_size.z and (grid[block] & (1 << (((mask.x % 4) + (mask.y % 4) * 4 + (mask.z % 4) * 4 * 4) % 64))) - 1 >= 0
 
 
 func has_array(mask: PackedInt64Array) -> Array[bool]:
@@ -196,7 +196,7 @@ func get_mask(sort := true) -> Array[Vector3i]:
 		for j in 64:
 			if (grid[i] & (1 << j)) - 1 >= 0:
 				var x := (i * 4 + (j % 4))
-				var y := ((x / grid_size.x) * 4 + ((i % 16) / 4) + ((j % 16) / 4))
+				var y := ((i % ((grid_size.x / 4) * (grid_size.y / 4))) / (grid_size.x / 4)) * 4 + (j % 16) / 4
 				mask.append(Vector3i(
 					x % grid_size.x,
 					y % grid_size.y,
