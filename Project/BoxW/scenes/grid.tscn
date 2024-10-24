@@ -1,0 +1,123 @@
+[gd_scene load_steps=11 format=3 uid="uid://bdjyfoiahrjme"]
+
+[ext_resource type="Script" path="res://scripts/grid.gd" id="1_bqduj"]
+[ext_resource type="PackedScene" uid="uid://bmmuxyvsi8lnk" path="res://scenes/tile/spawn.tscn" id="2_jchkj"]
+[ext_resource type="Shader" path="res://scenes/box_grid.gdshader" id="3_j35et"]
+[ext_resource type="PackedScene" uid="uid://cv5k0djk5cpn0" path="res://scenes/tile_selector.tscn" id="4_5e2m2"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_fiec3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ca3io"]
+shading_mode = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_hhafq"]
+material = SubResource("StandardMaterial3D_ca3io")
+size = Vector2(3, 3)
+center_offset = Vector3(0, 0, 0.095)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r7v1q"]
+render_priority = 0
+shader = ExtResource("3_j35et")
+
+[sub_resource type="BoxMesh" id="BoxMesh_4ih3t"]
+material = SubResource("ShaderMaterial_r7v1q")
+flip_faces = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fo15c"]
+size = Vector3(4, 4, 4)
+
+[node name="Grid" type="Node3D"]
+script = ExtResource("1_bqduj")
+
+[node name="Tile" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.72848e-12, 1.81899e-12)
+
+[node name="Spawn" parent="Tile" instance=ExtResource("2_jchkj")]
+
+[node name="Enemy" type="Node3D" parent="."]
+
+[node name="Limit" type="StaticBody3D" parent="."]
+collision_layer = 8
+
+[node name="D" type="CollisionShape3D" parent="Limit"]
+shape = SubResource("WorldBoundaryShape3D_fiec3")
+
+[node name="U" type="CollisionShape3D" parent="Limit"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 4, 0)
+shape = SubResource("WorldBoundaryShape3D_fiec3")
+
+[node name="R" type="CollisionShape3D" parent="Limit"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 4, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_fiec3")
+
+[node name="L" type="CollisionShape3D" parent="Limit"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_fiec3")
+
+[node name="F" type="CollisionShape3D" parent="Limit"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 4)
+shape = SubResource("WorldBoundaryShape3D_fiec3")
+
+[node name="B" type="CollisionShape3D" parent="Limit"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_fiec3")
+
+[node name="Node3D" type="Node3D" parent="Limit"]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+
+[node name="Offset" type="Node3D" parent="Limit/Node3D"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+visible = false
+
+[node name="U" type="MeshInstance3D" parent="Limit/Node3D/Offset"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+cast_shadow = 2
+mesh = SubResource("PlaneMesh_hhafq")
+skeleton = NodePath("../../../../../..")
+
+[node name="D" type="MeshInstance3D" parent="Limit/Node3D/Offset"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
+cast_shadow = 2
+mesh = SubResource("PlaneMesh_hhafq")
+skeleton = NodePath("../../../../../..")
+
+[node name="R" type="MeshInstance3D" parent="Limit/Node3D/Offset"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 10, 0, 0)
+cast_shadow = 2
+mesh = SubResource("PlaneMesh_hhafq")
+skeleton = NodePath("../../../../../..")
+
+[node name="L" type="MeshInstance3D" parent="Limit/Node3D/Offset"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -10, 0, 0)
+cast_shadow = 2
+mesh = SubResource("PlaneMesh_hhafq")
+skeleton = NodePath("../../../../../..")
+
+[node name="B" type="MeshInstance3D" parent="Limit/Node3D/Offset"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -10)
+cast_shadow = 2
+mesh = SubResource("PlaneMesh_hhafq")
+skeleton = NodePath("../../../../../..")
+
+[node name="F" type="MeshInstance3D" parent="Limit/Node3D/Offset"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 10)
+cast_shadow = 2
+mesh = SubResource("PlaneMesh_hhafq")
+skeleton = NodePath("../../../../../..")
+
+[node name="Mesh" type="MeshInstance3D" parent="Limit/Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5)
+mesh = SubResource("BoxMesh_4ih3t")
+
+[node name="Boundary" type="Area3D" parent="."]
+collision_layer = 16
+collision_mask = 0
+input_capture_on_drag = true
+
+[node name="Collision" type="CollisionShape3D" parent="Boundary"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 2)
+shape = SubResource("BoxShape3D_fo15c")
+
+[node name="TileSelector" parent="." instance=ExtResource("4_5e2m2")]
+
+[connection signal="select_input" from="TileSelector" to="." method="_on_tile_selector_select_input"]

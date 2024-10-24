@@ -1,0 +1,527 @@
+[gd_scene load_steps=22 format=3 uid="uid://5hdao7wvfyq"]
+
+[ext_resource type="Script" path="res://scripts/void.gd" id="1_gj4h5"]
+[ext_resource type="PackedScene" uid="uid://x0mlbtg4835v" path="res://scenes/player.tscn" id="5_behlf"]
+[ext_resource type="PackedScene" uid="uid://bdjyfoiahrjme" path="res://scenes/grid.tscn" id="5_p22mr"]
+[ext_resource type="AudioStream" uid="uid://dxwga7yuo3tqv" path="res://resources/audio/doorOpen_002.ogg" id="6_1ypom"]
+[ext_resource type="ArrayMesh" uid="uid://du8r3mup5ac20" path="res://resources/basis.tres" id="6_sbv7j"]
+[ext_resource type="Texture2D" uid="uid://bdoj0c37x4e3b" path="res://resources/grid.png" id="7_b77is"]
+
+[sub_resource type="Environment" id="Environment_4suwi"]
+background_mode = 1
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bqt4j"]
+points = PackedVector3Array(0.375, 0.375, 0.1, 0.375, 0.375, -0.1, -0.375, -0.375, 0.1, 0.375, -0.375, 0.1, 0.375, -0.375, -0.1, -0.375, -0.375, -0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_whku2"]
+albedo_color = Color(0.35584, 0.559592, 0.424458, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_47nb4"]
+material = SubResource("StandardMaterial3D_whku2")
+left_to_right = 1.0
+size = Vector3(0.75, 0.75, 0.2)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qb63m"]
+points = PackedVector3Array(0.375, 0.375, 0.1, 0.375, 0.375, -0.1, -0.375, -0.375, 0.1, 0.375, -0.375, 0.1, 0.375, -0.375, -0.1, -0.375, -0.375, -0.1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_kp8mo"]
+points = PackedVector3Array(0.375, 0.375, 0.1, 0.375, 0.375, -0.1, -0.375, -0.375, 0.1, 0.375, -0.375, 0.1, 0.375, -0.375, -0.1, -0.375, -0.375, -0.1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_own7x"]
+points = PackedVector3Array(0.375, 0.375, 0.1, 0.375, 0.375, -0.1, -0.375, -0.375, 0.1, 0.375, -0.375, 0.1, 0.375, -0.375, -0.1, -0.375, -0.375, -0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xtav5"]
+render_priority = 1
+transparency = 1
+albedo_color = Color(0, 1, 0.233333, 1)
+albedo_texture = ExtResource("7_b77is")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_s3ivx"]
+material = SubResource("StandardMaterial3D_xtav5")
+
+[sub_resource type="Animation" id="Animation_upw3y"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:mesh:material:uv1_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_27qmg"]
+resource_name = "focus"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:mesh:material:uv1_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.50018, 1.1891),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(0.25, 0.25, 0.25)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t7ds3"]
+_data = {
+"RESET": SubResource("Animation_upw3y"),
+"focus": SubResource("Animation_27qmg")
+}
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_viynf"]
+load_path = "res://.godot/imported/grid.png-64d53d2a29c7df1112ee90ad5dcebc69.etc2.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j22oa"]
+render_priority = 1
+transparency = 1
+albedo_color = Color(0.866667, 1, 0, 1)
+albedo_texture = SubResource("CompressedTexture2D_viynf")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_1v1s3"]
+material = SubResource("StandardMaterial3D_j22oa")
+
+[node name="Void" type="Node" node_paths=PackedStringArray("camera", "grid", "player")]
+script = ExtResource("1_gj4h5")
+camera = NodePath("Node3D/Node3D/Node3D^1/Pivot/Camera")
+grid = NodePath("Map/Grid")
+player = NodePath("Node3D/Player")
+
+[node name="Canvas" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="Canvas"]
+offset_left = 44.0
+offset_top = 27.0
+offset_right = 1897.0
+offset_bottom = 113.0
+autowrap_mode = 2
+
+[node name="BoxRotAudio" type="AudioStreamPlayer2D" parent="Canvas"]
+stream = ExtResource("6_1ypom")
+
+[node name="GridSize" type="HBoxContainer" parent="Canvas"]
+offset_left = 22.0
+offset_top = 400.0
+offset_right = 279.0
+offset_bottom = 440.33
+
+[node name="X" type="SpinBox" parent="Canvas/GridSize"]
+layout_mode = 2
+min_value = 4.0
+step = 4.0
+value = 4.0
+allow_greater = true
+custom_arrow_step = 0.1
+
+[node name="Y" type="SpinBox" parent="Canvas/GridSize"]
+layout_mode = 2
+min_value = 4.0
+step = 4.0
+value = 4.0
+allow_greater = true
+custom_arrow_step = 0.1
+
+[node name="Z" type="SpinBox" parent="Canvas/GridSize"]
+layout_mode = 2
+min_value = 4.0
+step = 4.0
+value = 4.0
+allow_greater = true
+custom_arrow_step = 0.1
+
+[node name="Zoom" type="SpinBox" parent="Canvas"]
+offset_left = 38.0
+offset_top = 500.0
+offset_right = 121.062
+offset_bottom = 564.0
+min_value = 5.0
+step = 5.0
+value = 10.0
+custom_arrow_step = 0.1
+
+[node name="PlayerControl" type="VBoxContainer" parent="Canvas"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -360.0
+offset_top = -325.585
+offset_right = -104.0
+offset_bottom = -69.585
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="A" type="HBoxContainer" parent="Canvas/PlayerControl"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="a" type="Button" parent="Canvas/PlayerControl/A"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+disabled = true
+
+[node name="F" type="Button" parent="Canvas/PlayerControl/A"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="b" type="Button" parent="Canvas/PlayerControl/A"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+disabled = true
+
+[node name="B" type="HBoxContainer" parent="Canvas/PlayerControl"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="L" type="Button" parent="Canvas/PlayerControl/B"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="a" type="Button" parent="Canvas/PlayerControl/B"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+disabled = true
+
+[node name="R" type="Button" parent="Canvas/PlayerControl/B"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="C" type="HBoxContainer" parent="Canvas/PlayerControl"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="a" type="Button" parent="Canvas/PlayerControl/C"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+disabled = true
+
+[node name="B" type="Button" parent="Canvas/PlayerControl/C"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="b" type="Button" parent="Canvas/PlayerControl/C"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+disabled = true
+
+[node name="CameraControl" type="VBoxContainer" parent="Canvas"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1804.0
+offset_top = -329.0
+offset_right = -1548.0
+offset_bottom = -73.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="A" type="HBoxContainer" parent="Canvas/CameraControl"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="XL" type="Button" parent="Canvas/CameraControl/A"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+action_mode = 0
+
+[node name="a" type="Button" parent="Canvas/CameraControl/A"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+disabled = true
+
+[node name="F" type="Button" parent="Canvas/CameraControl/A"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+action_mode = 0
+
+[node name="B" type="HBoxContainer" parent="Canvas/CameraControl"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="L" type="Button" parent="Canvas/CameraControl/B"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+action_mode = 0
+
+[node name="a" type="Button" parent="Canvas/CameraControl/B"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+disabled = true
+
+[node name="R" type="Button" parent="Canvas/CameraControl/B"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+action_mode = 0
+
+[node name="C" type="HBoxContainer" parent="Canvas/CameraControl"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="B" type="Button" parent="Canvas/CameraControl/C"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+action_mode = 0
+
+[node name="a" type="Button" parent="Canvas/CameraControl/C"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+disabled = true
+
+[node name="XR" type="Button" parent="Canvas/CameraControl/C"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+action_mode = 0
+
+[node name="Generate" type="VBoxContainer" parent="Canvas"]
+visible = false
+offset_left = 1730.0
+offset_top = 66.0
+offset_right = 1821.0
+offset_bottom = 272.0
+
+[node name="Active" type="CheckButton" parent="Canvas/Generate"]
+layout_mode = 2
+
+[node name="Mode" type="OptionButton" parent="Canvas/Generate"]
+layout_mode = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "Add"
+popup/item_1/text = "Erase"
+popup/item_1/id = 1
+
+[node name="Tile" type="OptionButton" parent="Canvas/Generate"]
+layout_mode = 2
+selected = 0
+fit_to_longest_item = false
+item_count = 1
+popup/item_0/text = "Normal"
+
+[node name="Fill" type="CheckBox" parent="Canvas/Generate"]
+layout_mode = 2
+text = "Fill"
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="Player" parent="Node3D" instance=ExtResource("5_behlf")]
+transform = Transform3D(1, -7.45058e-09, 1.49012e-08, 7.45058e-09, 1, -2.98023e-08, 1.49012e-08, -2.98023e-08, 1, -7.45058e-09, 1, -2.98023e-08)
+
+[node name="Node3D" type="Node3D" parent="Node3D"]
+
+[node name="Node3D^1" type="Node3D" parent="Node3D/Node3D"]
+transform = Transform3D(0.911969, 0.334638, 0.237339, -0.245826, 0.908882, -0.336904, -0.328454, 0.248902, 0.911135, 0, 0, 0)
+
+[node name="Pivot" type="Node3D" parent="Node3D/Node3D/Node3D^1"]
+transform = Transform3D(1, -1.49012e-08, 0, 2.23517e-08, 1, -2.98023e-08, 0, -1.49012e-08, 1, 1.80504e-06, -2.02195e-05, -1.05728e-05)
+
+[node name="Camera" type="Camera3D" parent="Node3D/Node3D/Node3D^1/Pivot"]
+transform = Transform3D(0.877111, -0.439056, 0.194692, 0.0606247, 0.503334, 0.861961, -0.476445, -0.744233, 0.468098, 33.769, 149.242, 81.1569)
+environment = SubResource("Environment_4suwi")
+projection = 1
+fov = 11.5
+size = 10.0
+
+[node name="Light" type="DirectionalLight3D" parent="Node3D/Node3D/Node3D^1/Pivot/Camera"]
+transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 0, 0)
+light_color = Color(0.998461, 1, 0.994815, 1)
+light_angular_distance = 30.0
+
+[node name="Camera3D" type="Camera3D" parent="Node3D/Node3D/Node3D^1/Pivot/Camera"]
+transform = Transform3D(1, 0, 0, 2.98023e-08, 1, 2.98023e-08, -8.9407e-08, 1.49012e-08, 1, 0, 0, 0)
+projection = 1
+current = true
+size = 10.0
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="Node3D/Node3D/Node3D^1/Pivot/Camera/Camera3D"]
+transform = Transform3D(1, 0, 0, 2.98023e-08, 1, 2.98023e-08, -8.9407e-08, 1.49012e-08, 1, 0, 0, 0)
+remote_path = NodePath("../../../../../../Control3D")
+
+[node name="Control3D" type="Node3D" parent="Node3D"]
+transform = Transform3D(0.707107, -0.408607, 0.577097, 1.83735e-07, 0.816138, 0.577857, -0.707107, -0.408606, 0.577097, 100, 100, 99.9999)
+
+[node name="Directional" type="Node3D" parent="Node3D/Control3D"]
+transform = Transform3D(1, 0, 2.38419e-07, 0, 1, 7.45058e-08, 2.98023e-08, -1.49012e-08, 1, -7.62939e-05, 0.107563, -173.205)
+visible = false
+
+[node name="X" type="Area3D" parent="Node3D/Control3D/Directional"]
+transform = Transform3D(-0.707107, 0.707107, 1.59601e-08, -0.408607, -0.408607, 0.816138, 0.577097, 0.577096, 0.577857, -0.5, 0.5, 0.5)
+visible = false
+
+[node name="D" type="CollisionShape3D" parent="Node3D/Control3D/Directional/X"]
+transform = Transform3D(-0.707107, -0.707107, 0, -3.09086e-08, 3.09086e-08, 1, -0.707107, 0.707107, -4.37114e-08, 4.47035e-08, 0.499985, -1.00002)
+shape = SubResource("ConvexPolygonShape3D_bqt4j")
+
+[node name="Mesh" type="MeshInstance3D" parent="Node3D/Control3D/Directional/X/D"]
+transform = Transform3D(1, 0, 1.77636e-15, 0, 1, -5.32907e-15, 0, -7.10543e-15, 1, -1.07884e-05, 1.09076e-05, 1.53184e-05)
+mesh = SubResource("PrismMesh_47nb4")
+skeleton = NodePath("../..")
+
+[node name="L" type="CollisionShape3D" parent="Node3D/Control3D/Directional/X"]
+transform = Transform3D(0.707107, -0.707107, 4.37114e-08, -3.09086e-08, 3.09086e-08, 1, -0.707107, -0.707107, 3.96724e-15, 1, 0.5, 4.37103e-08)
+shape = SubResource("ConvexPolygonShape3D_qb63m")
+
+[node name="Mesh" type="MeshInstance3D" parent="Node3D/Control3D/Directional/X/L"]
+transform = Transform3D(1, 0, -2.66454e-15, 0, 1, 8.88178e-16, 7.10543e-15, 7.10543e-15, 1, 0, 0, 0)
+mesh = SubResource("PrismMesh_47nb4")
+skeleton = NodePath("../..")
+
+[node name="U" type="CollisionShape3D" parent="Node3D/Control3D/Directional/X"]
+transform = Transform3D(0.707107, 0.707107, 1.77636e-15, -3.09086e-08, 3.09086e-08, 1, 0.707107, -0.707107, 4.37114e-08, -8.74228e-08, 0.5, 1)
+shape = SubResource("ConvexPolygonShape3D_kp8mo")
+
+[node name="Mesh" type="MeshInstance3D" parent="Node3D/Control3D/Directional/X/U"]
+transform = Transform3D(1, 0, 1.77636e-15, 0, 1, 0, -7.10543e-15, -7.10543e-15, 1, 0, 0, 0)
+mesh = SubResource("PrismMesh_47nb4")
+skeleton = NodePath("../..")
+
+[node name="R" type="CollisionShape3D" parent="Node3D/Control3D/Directional/X"]
+transform = Transform3D(-0.707107, 0.707107, -4.37114e-08, -3.09086e-08, 3.09086e-08, 1, 0.707107, 0.707107, 1.36183e-15, -1, 0.5, -1.19253e-08)
+shape = SubResource("ConvexPolygonShape3D_own7x")
+
+[node name="Mesh" type="MeshInstance3D" parent="Node3D/Control3D/Directional/X/R"]
+transform = Transform3D(1, 0, 7.10543e-15, 0, 1, 7.10543e-15, 3.55271e-15, 3.55271e-15, 1, 0, 0, 0)
+mesh = SubResource("PrismMesh_47nb4")
+skeleton = NodePath("../..")
+
+[node name="Y" type="Area3D" parent="Node3D/Control3D/Directional"]
+transform = Transform3D(-0.707107, 1.59601e-08, -0.707107, -0.408607, 0.816138, 0.408607, 0.577097, 0.577857, -0.577097, 0, -0.5, 0.5)
+
+[node name="D" type="CollisionShape3D" parent="Node3D/Control3D/Directional/Y"]
+transform = Transform3D(-0.707107, -0.707107, 0, -3.09086e-08, 3.09086e-08, 1, -0.707107, 0.707107, -4.37114e-08, 4.47035e-08, 0.499985, -1.00002)
+shape = SubResource("ConvexPolygonShape3D_bqt4j")
+
+[node name="Mesh" type="MeshInstance3D" parent="Node3D/Control3D/Directional/Y/D"]
+transform = Transform3D(1, 0, 1.77636e-15, 0, 1, -5.32907e-15, 0, -7.10543e-15, 1, -1.07884e-05, 1.09076e-05, 1.53184e-05)
+mesh = SubResource("PrismMesh_47nb4")
+skeleton = NodePath("../..")
+
+[node name="L" type="CollisionShape3D" parent="Node3D/Control3D/Directional/Y"]
+transform = Transform3D(0.707107, -0.707107, 4.37114e-08, -3.09086e-08, 3.09086e-08, 1, -0.707107, -0.707107, 3.96724e-15, 1, 0.5, 4.37103e-08)
+shape = SubResource("ConvexPolygonShape3D_qb63m")
+
+[node name="Mesh" type="MeshInstance3D" parent="Node3D/Control3D/Directional/Y/L"]
+transform = Transform3D(1, 0, -2.66454e-15, 0, 1, 8.88178e-16, 7.10543e-15, 7.10543e-15, 1, 0, 0, 0)
+mesh = SubResource("PrismMesh_47nb4")
+skeleton = NodePath("../..")
+
+[node name="U" type="CollisionShape3D" parent="Node3D/Control3D/Directional/Y"]
+transform = Transform3D(0.707107, 0.707107, 1.77636e-15, -3.09086e-08, 3.09086e-08, 1, 0.707107, -0.707107, 4.37114e-08, -8.74228e-08, 0.5, 1)
+shape = SubResource("ConvexPolygonShape3D_kp8mo")
+
+[node name="Mesh" type="MeshInstance3D" parent="Node3D/Control3D/Directional/Y/U"]
+transform = Transform3D(1, 0, 1.77636e-15, 0, 1, 0, -7.10543e-15, -7.10543e-15, 1, 0, 0, 0)
+mesh = SubResource("PrismMesh_47nb4")
+skeleton = NodePath("../..")
+
+[node name="R" type="CollisionShape3D" parent="Node3D/Control3D/Directional/Y"]
+transform = Transform3D(-0.707107, 0.707107, -4.37114e-08, -3.09086e-08, 3.09086e-08, 1, 0.707107, 0.707107, 1.36183e-15, -1, 0.5, -1.19253e-08)
+shape = SubResource("ConvexPolygonShape3D_own7x")
+
+[node name="Mesh" type="MeshInstance3D" parent="Node3D/Control3D/Directional/Y/R"]
+transform = Transform3D(1, 0, 7.10543e-15, 0, 1, 7.10543e-15, 3.55271e-15, 3.55271e-15, 1, 0, 0, 0)
+mesh = SubResource("PrismMesh_47nb4")
+skeleton = NodePath("../..")
+
+[node name="Z" type="Area3D" parent="Node3D/Control3D/Directional"]
+transform = Transform3D(-0.707107, -0.707107, -5.11328e-09, 0.408607, -0.408607, 0.816138, -0.577097, 0.577097, 0.577857, 0, 0, 1)
+visible = false
+
+[node name="D" type="CollisionShape3D" parent="Node3D/Control3D/Directional/Z"]
+transform = Transform3D(-0.707107, -0.707107, 0, -3.09086e-08, 3.09086e-08, 1, -0.707107, 0.707107, -4.37114e-08, 4.47035e-08, 0.499985, -1.00002)
+shape = SubResource("ConvexPolygonShape3D_bqt4j")
+
+[node name="Mesh" type="MeshInstance3D" parent="Node3D/Control3D/Directional/Z/D"]
+transform = Transform3D(1, 0, 1.77636e-15, 0, 1, -5.32907e-15, 0, -7.10543e-15, 1, -1.07884e-05, 1.09076e-05, 1.53184e-05)
+mesh = SubResource("PrismMesh_47nb4")
+skeleton = NodePath("../..")
+
+[node name="L" type="CollisionShape3D" parent="Node3D/Control3D/Directional/Z"]
+transform = Transform3D(0.707107, -0.707107, 4.37114e-08, -3.09086e-08, 3.09086e-08, 1, -0.707107, -0.707107, 3.96724e-15, 1, 0.5, 4.37103e-08)
+shape = SubResource("ConvexPolygonShape3D_qb63m")
+
+[node name="Mesh" type="MeshInstance3D" parent="Node3D/Control3D/Directional/Z/L"]
+transform = Transform3D(1, 0, -2.66454e-15, 0, 1, 8.88178e-16, 7.10543e-15, 7.10543e-15, 1, 0, 0, 0)
+mesh = SubResource("PrismMesh_47nb4")
+skeleton = NodePath("../..")
+
+[node name="U" type="CollisionShape3D" parent="Node3D/Control3D/Directional/Z"]
+transform = Transform3D(0.707107, 0.707107, 1.77636e-15, -3.09086e-08, 3.09086e-08, 1, 0.707107, -0.707107, 4.37114e-08, -8.74228e-08, 0.5, 1)
+shape = SubResource("ConvexPolygonShape3D_kp8mo")
+
+[node name="Mesh" type="MeshInstance3D" parent="Node3D/Control3D/Directional/Z/U"]
+transform = Transform3D(1, 0, 1.77636e-15, 0, 1, 0, -7.10543e-15, -7.10543e-15, 1, 0, 0, 0)
+mesh = SubResource("PrismMesh_47nb4")
+skeleton = NodePath("../..")
+
+[node name="R" type="CollisionShape3D" parent="Node3D/Control3D/Directional/Z"]
+transform = Transform3D(-0.707107, 0.707107, -4.37114e-08, -3.09086e-08, 3.09086e-08, 1, 0.707107, 0.707107, 1.36183e-15, -1, 0.5, -1.19253e-08)
+shape = SubResource("ConvexPolygonShape3D_own7x")
+
+[node name="Mesh" type="MeshInstance3D" parent="Node3D/Control3D/Directional/Z/R"]
+transform = Transform3D(1, 0, 7.10543e-15, 0, 1, 7.10543e-15, 3.55271e-15, 3.55271e-15, 1, 0, 0, 0)
+mesh = SubResource("PrismMesh_47nb4")
+skeleton = NodePath("../..")
+
+[node name="Debug" type="Node3D" parent="Node3D"]
+
+[node name="Axis" type="MeshInstance3D" parent="Node3D/Debug"]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
+mesh = ExtResource("6_sbv7j")
+skeleton = NodePath("../../..")
+
+[node name="Focus" type="MeshInstance3D" parent="Node3D/Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5)
+mesh = SubResource("BoxMesh_s3ivx")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Node3D/Debug/Focus"]
+libraries = {
+"": SubResource("AnimationLibrary_t7ds3")
+}
+autoplay = "focus"
+
+[node name="Focus2" type="MeshInstance3D" parent="Node3D/Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.5, 0.5)
+mesh = SubResource("BoxMesh_1v1s3")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Node3D/Debug/Focus2"]
+libraries = {
+"": SubResource("AnimationLibrary_t7ds3")
+}
+autoplay = "focus"
+
+[node name="Map" type="Node3D" parent="."]
+
+[node name="Grid" parent="Map" instance=ExtResource("5_p22mr")]
+
+[connection signal="value_changed" from="Canvas/Zoom" to="." method="_on_zoom_value_changed"]
