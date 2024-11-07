@@ -1,0 +1,56 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Wall4DE"
+run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.3", "GL Compatibility")
+config/icon="res://icon.svg"
+
+[autoload]
+
+Autoload="*res://scripts/autoload.gd"
+
+[debug]
+
+gdscript/warnings/integer_division=0
+shapes/collision/shape_color=Color(0, 0.6, 0.701961, 1)
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/stretch/mode="viewport"
+window/handheld/orientation=4
+
+[editor]
+
+movie_writer/movie_file="/storage/emulated/0/Godot/movies/mov.avi"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/csgtomesh/plugin.cfg")
+
+[layer_names]
+
+3d_physics/layer_1="Player"
+3d_physics/layer_2="PlayerArea"
+3d_physics/layer_3="TileBox"
+3d_physics/layer_4="TileFace"
+3d_physics/layer_5="GridLimit"
+3d_physics/layer_6="GridBoundary"
+3d_physics/layer_7="TileSelector"
+3d_physics/layer_8="TileFocus"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
