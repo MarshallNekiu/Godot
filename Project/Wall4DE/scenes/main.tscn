@@ -1,0 +1,369 @@
+[gd_scene load_steps=21 format=3 uid="uid://5hdao7wvfyq"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_odmgm"]
+[ext_resource type="AudioStream" uid="uid://dxwga7yuo3tqv" path="res://resources/audio/doorOpen_002.ogg" id="2_78llm"]
+[ext_resource type="PackedScene" uid="uid://x0mlbtg4835v" path="res://scenes/player.tscn" id="3_3fkx6"]
+[ext_resource type="Texture2D" uid="uid://by2io7hc2kfb3" path="res://resources/icon/border.png" id="3_82r1j"]
+[ext_resource type="Texture2D" uid="uid://cs0q1r1e0hshv" path="res://resources/circle.png" id="3_a06en"]
+[ext_resource type="Texture2D" uid="uid://5fcise28cutf" path="res://resources/icon/tile_selector.png" id="4_08qb0"]
+[ext_resource type="Texture2D" uid="uid://wadc6ylpbs5t" path="res://resources/icon/selector_b.png" id="5_4dqkq"]
+[ext_resource type="Texture2D" uid="uid://crklur80xongj" path="res://resources/icon/normal.png" id="6_4eafq"]
+[ext_resource type="PackedScene" uid="uid://bdjyfoiahrjme" path="res://scenes/grid.tscn" id="6_dif7o"]
+[ext_resource type="Texture2D" uid="uid://q3tnbx2stoi8" path="res://resources/face_control.png" id="6_j2tsi"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iyw8f"]
+draw_center = false
+
+[sub_resource type="Theme" id="Theme_1yrsg"]
+Button/styles/normal = SubResource("StyleBoxFlat_iyw8f")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jwx40"]
+atlas = ExtResource("6_j2tsi")
+region = Rect2(64, 16, 64, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3skwb"]
+atlas = ExtResource("6_j2tsi")
+region = Rect2(128, 16, 64, 80)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xv3fo"]
+load_path = "res://.godot/imported/face_control.png-79dc8f2e5bc9695e324e692e1e39ca01.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t2ime"]
+atlas = SubResource("CompressedTexture2D_xv3fo")
+region = Rect2(64, 96, 128, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hjocq"]
+atlas = SubResource("CompressedTexture2D_xv3fo")
+region = Rect2(64, 128, 128, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u83ht"]
+atlas = ExtResource("6_j2tsi")
+region = Rect2(64, 160, 64, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lm8ko"]
+atlas = ExtResource("6_j2tsi")
+region = Rect2(128, 160, 64, 80)
+
+[sub_resource type="Environment" id="Environment_4suwi"]
+background_mode = 1
+
+[node name="Main" type="Node" node_paths=PackedStringArray("camera", "grid", "player")]
+script = ExtResource("1_odmgm")
+camera = NodePath("Node3D/A/B/C/D/Camera")
+grid = NodePath("Map/Grid")
+player = NodePath("Node3D/Player")
+
+[node name="Canvas" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="Canvas"]
+offset_left = 44.0
+offset_top = 27.0
+offset_right = 1897.0
+offset_bottom = 113.0
+autowrap_mode = 2
+
+[node name="GridSize" type="HBoxContainer" parent="Canvas"]
+offset_left = 22.0
+offset_top = 400.0
+offset_right = 279.0
+offset_bottom = 440.33
+
+[node name="X" type="SpinBox" parent="Canvas/GridSize"]
+layout_mode = 2
+min_value = 4.0
+max_value = 40.0
+step = 4.0
+value = 4.0
+allow_greater = true
+custom_arrow_step = 0.1
+
+[node name="Y" type="SpinBox" parent="Canvas/GridSize"]
+layout_mode = 2
+min_value = 4.0
+max_value = 40.0
+step = 4.0
+value = 4.0
+allow_greater = true
+custom_arrow_step = 0.1
+
+[node name="Z" type="SpinBox" parent="Canvas/GridSize"]
+layout_mode = 2
+min_value = 4.0
+max_value = 40.0
+step = 4.0
+value = 4.0
+allow_greater = true
+custom_arrow_step = 0.1
+
+[node name="Zoom" type="SpinBox" parent="Canvas"]
+offset_left = 22.0
+offset_top = 501.0
+offset_right = 105.062
+offset_bottom = 565.0
+min_value = 5.0
+max_value = 50.0
+value = 10.0
+custom_arrow_step = 0.1
+
+[node name="CameraControl" type="Control" parent="Canvas"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 140.0
+offset_top = 830.0
+offset_right = 396.0
+offset_bottom = 830.0
+
+[node name="TextureButton" type="TextureButton" parent="Canvas/CameraControl"]
+layout_mode = 0
+offset_left = -44.0
+offset_top = -51.0
+offset_right = 212.0
+offset_bottom = 205.0
+texture_normal = ExtResource("3_a06en")
+texture_pressed = ExtResource("3_a06en")
+texture_hover = ExtResource("3_a06en")
+texture_disabled = ExtResource("3_a06en")
+texture_focused = ExtResource("3_a06en")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Line2D" type="Line2D" parent="Canvas/CameraControl/TextureButton"]
+position = Vector2(131, 124)
+points = PackedVector2Array(0, 0, 0, -128)
+width = 2.0
+
+[node name="PlayerControl" type="Control" parent="Canvas"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1608.0
+offset_top = 790.0
+offset_right = 1864.0
+offset_bottom = 790.0
+
+[node name="TextureButton" type="TextureButton" parent="Canvas/PlayerControl"]
+layout_mode = 0
+offset_left = -44.0
+offset_top = -51.0
+offset_right = 212.0
+offset_bottom = 205.0
+texture_normal = ExtResource("3_a06en")
+texture_pressed = ExtResource("3_a06en")
+texture_hover = ExtResource("3_a06en")
+texture_disabled = ExtResource("3_a06en")
+texture_focused = ExtResource("3_a06en")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Line2D" type="Line2D" parent="Canvas/PlayerControl/TextureButton"]
+position = Vector2(131, 124)
+points = PackedVector2Array(0, 0, 0, -128)
+width = 2.0
+
+[node name="Generate" type="VBoxContainer" parent="Canvas"]
+custom_minimum_size = Vector2(256, 0)
+offset_left = 1634.0
+offset_top = 66.0
+offset_right = 1890.0
+offset_bottom = 614.0
+
+[node name="Tile" type="OptionButton" parent="Canvas/Generate"]
+layout_mode = 2
+fit_to_longest_item = false
+allow_reselect = true
+
+[node name="Add" type="HBoxContainer" parent="Canvas/Generate"]
+layout_mode = 2
+
+[node name="Area" type="Button" parent="Canvas/Generate/Add"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+text = "A"
+icon = ExtResource("4_08qb0")
+
+[node name="Orthogonal" type="Button" parent="Canvas/Generate/Add"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+text = "O"
+icon = ExtResource("5_4dqkq")
+
+[node name="Erase" type="HBoxContainer" parent="Canvas/Generate"]
+layout_mode = 2
+
+[node name="Area" type="Button" parent="Canvas/Generate/Erase"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+text = "A"
+icon = ExtResource("4_08qb0")
+
+[node name="Orthogonal" type="Button" parent="Canvas/Generate/Erase"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+text = "O"
+icon = ExtResource("5_4dqkq")
+
+[node name="Border" type="CheckButton" parent="Canvas/Generate"]
+layout_mode = 2
+button_pressed = true
+text = "Border"
+icon = ExtResource("3_82r1j")
+
+[node name="SelectorA" type="CheckButton" parent="Canvas/Generate"]
+layout_mode = 2
+button_pressed = true
+text = "SelectorA"
+icon = ExtResource("4_08qb0")
+
+[node name="SelectorB" type="CheckButton" parent="Canvas/Generate"]
+layout_mode = 2
+button_pressed = true
+text = "SelectorB"
+icon = ExtResource("5_4dqkq")
+
+[node name="Trigger" type="VBoxContainer" parent="Canvas/Generate"]
+layout_mode = 2
+theme = SubResource("Theme_1yrsg")
+theme_override_constants/separation = 0
+
+[node name="HBC" type="HBoxContainer" parent="Canvas/Generate/Trigger"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Li" type="TextureRect" parent="Canvas/Generate/Trigger/HBC"]
+layout_mode = 2
+texture = ExtResource("6_4eafq")
+stretch_mode = 3
+
+[node name="L" type="Button" parent="Canvas/Generate/Trigger/HBC"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("AtlasTexture_jwx40")
+icon_alignment = 2
+
+[node name="B" type="Button" parent="Canvas/Generate/Trigger/HBC"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("AtlasTexture_3skwb")
+
+[node name="Bi" type="TextureRect" parent="Canvas/Generate/Trigger/HBC"]
+layout_mode = 2
+texture = ExtResource("6_4eafq")
+stretch_mode = 3
+
+[node name="HBC2" type="HBoxContainer" parent="Canvas/Generate/Trigger"]
+layout_mode = 2
+
+[node name="Ui" type="TextureRect" parent="Canvas/Generate/Trigger/HBC2"]
+layout_mode = 2
+size_flags_horizontal = 2
+texture = ExtResource("6_4eafq")
+stretch_mode = 3
+
+[node name="U" type="Button" parent="Canvas/Generate/Trigger/HBC2"]
+layout_mode = 2
+size_flags_horizontal = 3
+icon = SubResource("AtlasTexture_t2ime")
+icon_alignment = 1
+
+[node name="Control" type="Control" parent="Canvas/Generate/Trigger/HBC2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBC3" type="HBoxContainer" parent="Canvas/Generate/Trigger"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="Canvas/Generate/Trigger/HBC3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="D" type="Button" parent="Canvas/Generate/Trigger/HBC3"]
+layout_mode = 2
+size_flags_horizontal = 3
+icon = SubResource("AtlasTexture_hjocq")
+icon_alignment = 1
+
+[node name="Di" type="TextureRect" parent="Canvas/Generate/Trigger/HBC3"]
+layout_mode = 2
+size_flags_horizontal = 10
+texture = ExtResource("6_4eafq")
+stretch_mode = 3
+
+[node name="HBC4" type="HBoxContainer" parent="Canvas/Generate/Trigger"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Fi" type="TextureRect" parent="Canvas/Generate/Trigger/HBC4"]
+layout_mode = 2
+texture = ExtResource("6_4eafq")
+stretch_mode = 3
+
+[node name="F" type="Button" parent="Canvas/Generate/Trigger/HBC4"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("AtlasTexture_u83ht")
+icon_alignment = 2
+
+[node name="R" type="Button" parent="Canvas/Generate/Trigger/HBC4"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("AtlasTexture_lm8ko")
+
+[node name="Ri" type="TextureRect" parent="Canvas/Generate/Trigger/HBC4"]
+layout_mode = 2
+texture = ExtResource("6_4eafq")
+stretch_mode = 3
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="Player" parent="Node3D" instance=ExtResource("3_3fkx6")]
+transform = Transform3D(1, -7.45058e-09, 1.49012e-08, 7.45058e-09, 1, -2.98023e-08, 1.49012e-08, -2.98023e-08, 1, 1.5, 5.5, 1.5)
+max_contacts_reported = 4
+angular_damp = 10.0
+
+[node name="A" type="Node3D" parent="Node3D"]
+
+[node name="B" type="Node3D" parent="Node3D/A"]
+transform = Transform3D(0.911969, 0.334638, 0.237339, -0.245826, 0.908882, -0.336904, -0.328454, 0.248902, 0.911135, 0, 0, 0)
+
+[node name="C" type="Node3D" parent="Node3D/A/B"]
+transform = Transform3D(1, -1.49012e-08, 0, 2.23517e-08, 1, -2.98023e-08, 0, -1.49012e-08, 1, 1.80504e-06, -2.02195e-05, -1.05728e-05)
+
+[node name="D" type="Node3D" parent="Node3D/A/B/C"]
+transform = Transform3D(0.877111, -0.439057, 0.194693, 0.0606247, 0.503334, 0.861962, -0.476445, -0.744233, 0.468098, 33.769, 149.242, 81.1569)
+
+[node name="Camera" type="Camera3D" parent="Node3D/A/B/C/D"]
+transform = Transform3D(1, 5.96046e-07, 8.9407e-08, -2.98023e-08, 1, 1.93715e-07, -3.57628e-07, -8.9407e-08, 1, 0, 0, 0)
+environment = SubResource("Environment_4suwi")
+projection = 1
+current = true
+size = 10.0
+
+[node name="Light" type="DirectionalLight3D" parent="Node3D/A/B/C/D/Camera"]
+transform = Transform3D(1, 1.19209e-07, -2.08616e-07, 2.98023e-08, 0.819152, 0.573576, 1.78814e-07, -0.573576, 0.819152, 0, 0, 0)
+light_color = Color(0.998461, 1, 0.994815, 1)
+light_angular_distance = 30.0
+
+[node name="Map" type="Node3D" parent="."]
+
+[node name="Grid" parent="Map" instance=ExtResource("6_dif7o")]
+
+[node name="BoxRotAudio" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(899, 709)
+stream = ExtResource("2_78llm")
+
+[connection signal="value_changed" from="Canvas/Zoom" to="." method="_on_zoom_value_changed"]
+[connection signal="pressed" from="Canvas/CameraControl/TextureButton" to="." method="_on_camera_texture_button_pressed"]
+[connection signal="pressed" from="Canvas/PlayerControl/TextureButton" to="." method="_on_player_texture_button_pressed"]
+[connection signal="item_selected" from="Canvas/Generate/Tile" to="." method="_on_tile_item_selected"]
+[connection signal="pressed" from="Canvas/Generate/Add/Area" to="." method="_on_area_pressed"]
+[connection signal="pressed" from="Canvas/Generate/Add/Orthogonal" to="." method="_on_orthogonal_pressed"]
+[connection signal="pressed" from="Canvas/Generate/Erase/Area" to="." method="_on_area_pressed"]
+[connection signal="pressed" from="Canvas/Generate/Erase/Orthogonal" to="." method="_on_orthogonal_pressed"]
+[connection signal="toggled" from="Canvas/Generate/Border" to="." method="_on_border_toggled"]
+[connection signal="toggled" from="Canvas/Generate/SelectorA" to="." method="_on_selector_a_toggled"]
+[connection signal="toggled" from="Canvas/Generate/SelectorB" to="." method="_on_selector_b_toggled"]
